@@ -7,14 +7,19 @@
 body{
   background-color: #ededed;
 }
-
+.alldays{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
 .container{
   overflow: hidden;
   z-index: 10;
   position: relative;
-  margin: 150px auto;
+  margin: 10px auto;
   height: 90px;
-  width: 300px;
+  width: 600px;
   background-color: #F17022;
   border-radius: 10px;
   box-shadow: 2px 2px 1px rgba(0,0,0,0.2);
@@ -90,17 +95,55 @@ body{
   z-index: 1000;
   position: absolute;
   font-family: "Roboto", sans-serif;
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 400;
   left: 20px;
   bottom: 5px;
 }
-
+.TempMin{
+  z-index: 1000;
+  position: absolute;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  font-weight: 200;
+  left: 20px;
+  bottom: 25px;
+}
+.TempMax{
+  z-index: 1000;
+  position: absolute;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  left: 20px;
+  bottom: 5px;
+}
+.Wind{
+  z-index: 1000;
+  position: absolute;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  left: 200px;
+  bottom: 10px;
+}
 #C{
   z-index: 1000;
   font-family: "Roboto",sans-serif;
   font-weight: 100;
   font-size: 30px;
+}
+#Cmin{
+  z-index: 1000;
+  font-family: "Roboto",sans-serif;
+  font-weight: 100;
+  font-size: 20px;
+}
+#Cmax{
+  z-index: 1000;
+  font-family: "Roboto",sans-serif;
+  font-weight: 100;
+  font-size: 20px;
 }
 
 
@@ -137,8 +180,8 @@ body{
 .center-div {
   display: flex;
   justify-content: center;
-  position: relative;
-  top: 50vh;
+  position: absolute;
+  bottom: 100px;
 }
 #inputText{
   border-radius: 10px;

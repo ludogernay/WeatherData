@@ -13,20 +13,23 @@
 </head>
 
 <body>
-    <div class="center-div">
-        <input type="text" id="inputText" placeholder="Entrez votre ville...">
-        <input type="button" id="Valider" value="Valider">
-    </div>
-    <div class="container">
-        <div class="background">
-            <div class="Circle1"></div>
-            <div class="Circle2"></div>
-            <div class="Circle3"></div>
-            <div class="content">
-                <h1 class="Condition"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
-                <h1 class="Temp">40<span id="C">&#8451;</span></h1>
-                <h1 class="Time">09:35</h1>
-                <h1 class="Location"><i class="material-icons locationIcon">place</i> Raleigh, NC</h1>
+    <div class="alldays">
+        <div class="center-div">
+            <input type="text" id="inputText" placeholder="Entrez votre ville...">
+            <input type="button" id="Valider" value="Valider">
+        </div>
+        <div class="container">
+            <div class="background">
+                <div class="Circle1"></div>
+                <div class="Circle2"></div>
+                <div class="Circle3"></div>
+                <div class="content">
+                    <h1 class="Condition"><i class="material-icons sun">wb_sunny</i> Sunny</h1>
+                    <h1 class="Temp"></h1>
+                    <h1 class="Wind"></h1>
+                    <h1 class="Time"></h1>
+                    <h1 class="Location"><i class="material-icons locationIcon"></i></h1>
+                </div>
             </div>
         </div>
     </div>
@@ -34,5 +37,8 @@
 
 </body>
 <script src="app.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC32aFTV0VFd9pBffLsbtWrnjXaWUtGq60&v=weekly">
+
+</script>
 
 </html>
