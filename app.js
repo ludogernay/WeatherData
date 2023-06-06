@@ -9,10 +9,9 @@ const vent = document.querySelector('.Wind');
 const condition = document.querySelector('.Condition');
 var lat, lng;
 var background;
+var currentWMO;
 //cacher tout les elements de la page
 container.style.display = 'none';
-//ajouter une image au body
-document.body.style.backgroundImage = "url('image/bg_meteo.jpg')";
 valider.addEventListener('click', async () => {
   ville = inputtext.value;
   var i = 0;
@@ -23,26 +22,27 @@ valider.addEventListener('click', async () => {
     lng = villeData.results[0].geometry.location.lng;
     Ville = villeData.results[0].formatted_address;
     container.style.display = 'block';
-    container.id =`${i}`;
+    container.id = `${i}`;
     const meteoResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=weathercode,temperature_2m_max,temperature_2m_min,windspeed_10m_max&daily=winddirection_10m_dominant&current_weather=true&timezone=Europe%2FBerlin`);
     const meteoData = await meteoResponse.json();
     var temperature = meteoData.current_weather.temperature;
     var wind = meteoData.current_weather.windspeed;
     var winddir = meteoData.current_weather.winddirection;
-    var wmo = meteoData.current_weather.weathercode;
+    currentWMO = meteoData.current_weather.weathercode;
+    BG(currentWMO);
     loc.innerHTML = `<i class="material-icons locationIcon">place</i> ${Ville}`;
     temp.innerHTML = `${temperature} <span id="C">&#8451;</span>`;
     vent.innerHTML = `Vent : ${wind}km/h ${DirectionVent(winddir)}`;
-    condition.innerHTML = `${loadImages(meteoData.daily.weathercode[i])}`;
+    condition.innerHTML = `${loadImages(meteoData.current_weather.weathercode)}`;
     const date = await getDate(lat, lng);
-    heure.innerHTML = formatDate(date, i);
+    heure.innerHTML = formatDate(date, i) + " " + formatHour(date);
     container.style.backgroundColor = background;
     const previousDays = document.querySelectorAll('.day');  // remove previous days
     previousDays.forEach(day => day.remove());
     for (i = 1; i < 7; i++) {
       const day = document.createElement('div');
       day.classList.add('container', 'day');
-      day.id=`${i}`;
+      day.id = `${i}`;
       day.innerHTML = `
         <div class="background">
           <div class="Circle1"></div>
@@ -80,9 +80,12 @@ function formatDate(date, i) {
   const day = String(date.getDate() + i).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+function formatHour(date) {
   const hours = String(date.getHours()).padStart(2, '0');
   const minutes = String(date.getMinutes()).padStart(2, '0');
-  return `${day}/${month}/${year} ${hours}:${minutes}`;
+  return `${hours}:${minutes}`;
 }
 function DirectionVent(winddir) {
   if (winddir >= 360 - 22.5 && winddir <= 22.5) {
@@ -146,29 +149,54 @@ function WMOtoWeather(wmo) {
 function loadImages(wmo) {
   console.log(WMOtoWeather(wmo));
   if (wmo == 0) {
-    background = 'orange';
+    background = '#EE8A2Bc2';
     return `<img class="logo" src="Image/soleil.png" alt="Image">`
   } else if (wmo == 1 || wmo == 2) {
-    background = '#ECECEC';
+    background = '#ECECEC82';
     return `<img class="logo" src="Image/couvert.png" alt="Image">`
   } else if (wmo == 3) {
-    background = '#CDCDCD';
+    background = '#CDCDCD82';
     return `<img class="logo" src="Image/nuageux.png" alt="Image">`
-  } else if (wmo >= 80 && wmo <=86){
-    background = '#1F74E782';
+  } else if (wmo >= 80 && wmo <= 86) {
+    background = '#94949482';
     return `<img class="logo" src="Image/averses.png" alt="Image">`
-  } else if (wmo == 95 || wmo == 96 || wmo == 99){
-    background = '#505050';
+  } else if (wmo == 95 || wmo == 96 || wmo == 99) {
+    background = '#50505082';
     return `<img class="logo" src="Image/orage.png" alt="Image">`
-  } else if (wmo >=51 && wmo <=67){
-    background = 'blue';
+  } else if (wmo >= 51 && wmo <= 67) {
+    background = '#94949482';
     return `<img class="logo" src="Image/pluie.png" alt="Image">`
-  } else if (wmo <=71 && wmo >=77){
-    background = '#1F74E730';
+  } else if (wmo >= 71 && wmo <= 77) {
+    background = '#FFFFFFc7';
     return `<img class="logo" src="Image/neige.png" alt="Image">`
-  }else{
-    background = 'green';
+  } else if (wmo == 45 || wmo == 48) {
+    background = '#CDCDCD82';
+    return `<img class="logo" src="Image/brouillard.png" alt="Image">`
+  } else {
+    background = '#ECECEC82';
     return `<img class="logo" src="Image/vent.png" alt="Image">`
+  }
+}
+function BG(wmo) {
+  console.log(wmo);
+  if (wmo == 0) {
+    document.body.style.backgroundImage = "url('image/bg_soleil.jpg')";
+  } else if (wmo == 1 || wmo == 2) {
+    document.body.style.backgroundImage = "url('image/bg_couvert.jpg')";
+  } else if (wmo == 3) {
+    document.body.style.backgroundImage = "url('image/bg_nuageux.jpg')";
+  } else if (wmo >= 80 && wmo <= 86) {
+    document.body.style.backgroundImage = "url('image/rain.gif')";
+  } else if (wmo == 95 || wmo == 96 || wmo == 99) {
+    document.body.style.backgroundImage = "url('image/orage.gif')";
+  } else if (wmo >= 51 && wmo <= 67) {
+    document.body.style.backgroundImage = "url('image/rain.gif')";
+  } else if (wmo >= 71 && wmo <= 77) {
+    document.body.style.backgroundImage = "url('image/neige.gif')";
+  } else if (wmo == 45 || wmo == 48) {
+    document.body.style.backgroundImage = "url('image/bg_brouillard.jpg')";
+  } else {
+    document.body.style.backgroundImage = "url('image/bg_vent.jpg')";
   }
 }
 

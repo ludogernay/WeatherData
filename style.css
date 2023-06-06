@@ -6,7 +6,6 @@
 
 body{
   background-color: #ededed;
-  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -15,6 +14,9 @@ body{
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  position: absolute;
+  top: 100px;
+  gap: 15px;
 }
 .container{
   overflow: hidden;
@@ -187,11 +189,11 @@ body{
   display: flex;
   justify-content: center;
   position: absolute;
-  bottom: 100px;
+  left: 37vw;
+  top: 3vh;
 }
 #inputText{
-  border-radius: 10px;
-  border: 1px solid #000;
+  border-radius: 50px;
   padding: 10px;
   margin: 10px;
   width: 200px;
@@ -199,18 +201,17 @@ body{
   font-size: 20px;
   font-weight: bold;
   color: #000;
-  background-color: #FFF;
+  box-shadow: 2px 2px 1px rgba(0,0,0,0.2);
 }
 #Valider{
   text-align: center;
-  border-radius: 10px;
-  border: 1px solid #000;
+  border-radius: 50px;
   padding: 10px;
   margin: 10px;
   font-size: 20px;
   font-weight: bold;
   color: #000;
-  background-color: #FFF;
+  box-shadow: 2px 2px 1px rgba(0,0,0,0.2);
 }
 .logo{
   position: absolute;
