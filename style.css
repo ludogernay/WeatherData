@@ -31,7 +31,7 @@ body {
   overflow: hidden;
   z-index: 10;
   margin: 10px auto;
-  height: 100px;
+  height: auto;
   width: 35vw;
   background-color: #F17022;
   border-radius: 10px;
