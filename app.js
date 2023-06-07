@@ -21,7 +21,7 @@ valider.addEventListener('click', async () => {
     lat = villeData.results[0].geometry.location.lat;
     lng = villeData.results[0].geometry.location.lng;
     Ville = villeData.results[0].formatted_address;
-    container.style.display = 'block';
+    container.style.display = 'grid';
     container.id = `${i}`;
     const meteoResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=weathercode,temperature_2m_max,temperature_2m_min,windspeed_10m_max&daily=winddirection_10m_dominant&current_weather=true&timezone=Europe%2FBerlin`);
     const meteoData = await meteoResponse.json();
@@ -31,7 +31,7 @@ valider.addEventListener('click', async () => {
     currentWMO = meteoData.current_weather.weathercode;
     BG(currentWMO);
     loc.innerHTML = `<i class="material-icons locationIcon">place</i> ${Ville}`;
-    temp.innerHTML = `${temperature} <span id="C">&#8451;</span>`;
+    temp.innerHTML = `${temperature}°C`;
     vent.innerHTML = `Vent : ${wind}km/h ${DirectionVent(winddir)}`;
     condition.innerHTML = `${loadImages(meteoData.current_weather.weathercode)}`;
     const date = await getDate(lat, lng);
@@ -44,19 +44,14 @@ valider.addEventListener('click', async () => {
       day.classList.add('container', 'day');
       day.id = `${i}`;
       day.innerHTML = `
-        <div class="background">
-          <div class="Circle1"></div>
-          <div class="Circle2"></div>
-          <div class="Circle3"></div>
-          <div class="content">
               <h1 class="Condition">${loadImages(meteoData.daily.weathercode[i])}</h1>
-              <h1 class="TempMin">Min : ${meteoData.daily.temperature_2m_min[i]} <span id="Cmin">&#8451;</span></h1>
-              <h1 class="TempMax">Max : ${meteoData.daily.temperature_2m_max[i]} <span id="Cmax">&#8451;</span></h1>
+              <div class="Temp">
+                <h1 class="TempMin">Min : ${meteoData.daily.temperature_2m_min[i]}°C</h1>
+                <h1 class="TempMax">Max : ${meteoData.daily.temperature_2m_max[i]}°C</h1>
+              </div>
               <h1 class="Wind">Vent : ${meteoData.daily.windspeed_10m_max[i]}km/h ${DirectionVent(meteoData.daily.winddirection_10m_dominant[i])}</h1>
               <h1 class="Time">${formatDate(date, i)}</h1>
               <h1 class="Location"><i class="material-icons locationIcon">place</i> ${Ville}</h1>
-          </div>
-        </div>
       `;
       day.style.backgroundColor = background;
       alldays.appendChild(day);
@@ -199,4 +194,3 @@ function BG(wmo) {
     document.body.style.backgroundImage = "url('image/bg_vent.jpg')";
   }
 }
-
